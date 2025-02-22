@@ -1,22 +1,19 @@
 package com.example.submissionstoryapp.di
 
-
-import android.content.Context
-import com.example.submissionstoryapp.data.Repository
-import com.example.submissionstoryapp.data.RepositoryImpl
-import com.example.submissionstoryapp.data.api.ApiHelper
-import com.example.submissionstoryapp.data.api.ApiHelperImpl
-import com.example.submissionstoryapp.utils.Constant
+import com.example.submissionstoryapp.data.remote.api.ApiHelper
+import com.example.submissionstoryapp.data.remote.api.ApiHelperImpl
+import com.example.submissionstoryapp.data.remote.api.ApiService
+import com.example.submissionstoryapp.data.repository.Repository
+import com.example.submissionstoryapp.data.repository.RepositoryImpl
+import com.example.submissionstoryapp.domain.StoriesUseCase
+import com.example.submissionstoryapp.domain.authUseCase.LoginUseCase
+import com.example.submissionstoryapp.domain.authUseCase.RegisterUseCase
+import com.example.submissionstoryapp.presentation.base.ViewModelFactory
+import com.example.submissionstoryapp.utils.UserPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -25,52 +22,37 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .connectTimeout(300, TimeUnit.MILLISECONDS)
-            .readTimeout(300, TimeUnit.MILLISECONDS)
-            .retryOnConnectionFailure(true)
-            .build()
+    fun provideApiHelperImpl(apiService: ApiService): ApiHelper {
+        return ApiHelperImpl(apiService)
     }
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-
-        return Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideRepository(apiHelper: ApiHelper):Repository{
+        return RepositoryImpl(apiHelper)
     }
 
     @Singleton
     @Provides
-    fun provideApiHelperImpl(apiHelperImpl: ApiHelperImpl): ApiHelper {
-        return apiHelperImpl
+    fun provideViewModelFactory(repository: Repository):ViewModelFactory{
+        return ViewModelFactory(repository)
     }
 
     @Singleton
     @Provides
-    fun provideViewModelFactory(repository: RepositoryImpl):ViewModelFactory{
-        return repository
+    fun provideLoginUseCase(repository: Repository,userPref:UserPref): LoginUseCase {
+        return LoginUseCase(repository,userPref)
     }
 
     @Singleton
     @Provides
-    fun provideGetData(repository: Repository):GetDataUseCase{
-        return repository
+    fun provideRegisterUseCase(repository: Repository): RegisterUseCase {
+        return RegisterUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideGetLoginUseCase(repository:Repository):GetLoginUseCase{
-        return repository
+    fun provideStoriesUseCase(repository: Repository): StoriesUseCase {
+        return StoriesUseCase(repository)
     }
-
-
 }

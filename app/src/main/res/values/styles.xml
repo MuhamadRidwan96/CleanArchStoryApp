@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Custom" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorSize">32dp</item> <!-- Ukuran lingkaran -->
+        <item name="trackThickness">4dp</item> <!-- Ketebalan garis -->
+        <item name="indicatorColor">@color/white</item> <!-- Warna utama -->
+    </style>
+</resources>

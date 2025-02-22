@@ -1,9 +1,10 @@
+
+@Suppress("deprecation")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.gradle)
 }
 
 android {
@@ -33,9 +34,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
+
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 dependencies {
@@ -48,19 +57,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation (libs.javapoet)
+    implementation(libs.androidx.fragment.ktx)
 
-    // Hilt
+    //hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    //room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    ksp (libs.hilt.android.compiler)
 
     // Coroutines (clean architecture)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
 
     // ViewModel & LiveData
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
@@ -71,4 +78,17 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
 
+    //room
+    implementation( libs.androidx.room.runtime.v250)
+    ksp (libs.androidx.room.compiler.v250)
+    implementation( libs.androidx.room.ktx.v250)
+
+    //datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    //lottie
+    implementation(libs.lottie)
+
+    //glide
+    implementation (libs.glide)
 }

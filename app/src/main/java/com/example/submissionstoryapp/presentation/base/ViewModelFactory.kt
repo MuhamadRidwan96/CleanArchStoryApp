@@ -2,7 +2,7 @@ package com.example.submissionstoryapp.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.submissionstoryapp.data.Repository
+import com.example.submissionstoryapp.data.repository.Repository
 import javax.inject.Inject
 
 

@@ -1,0 +1,43 @@
+package com.example.submissionstoryapp.presentation.welcome
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.submissionstoryapp.MainActivity
+import com.example.submissionstoryapp.R
+import com.example.submissionstoryapp.presentation.MainViewModel
+import com.example.submissionstoryapp.presentation.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class WelcomeActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_welcome)
+
+        lifecycleScope.launch {
+            delay(2000)
+            checkLoginObserver()
+            viewModel.checkLogin()
+        }
+    }
+
+    private fun checkLoginObserver() {
+        viewModel.isLoggedIn.observe(this) { isLogin ->
+            if (isLogin) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+            finish()
+        }
+    }
+}
