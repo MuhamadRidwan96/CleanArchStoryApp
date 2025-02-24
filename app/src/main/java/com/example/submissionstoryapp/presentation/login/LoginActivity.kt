@@ -58,7 +58,6 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.loginResult.collectLatest { loginState ->
-                    Log.d("LoginResult", "Collected login state: $loginState")
                     when (loginState) {
                         is UiState.Success -> {
                             navigateToHomeScreen()

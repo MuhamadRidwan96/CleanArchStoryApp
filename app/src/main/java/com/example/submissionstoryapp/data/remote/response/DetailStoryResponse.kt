@@ -1,6 +1,6 @@
 package com.example.submissionstoryapp.data.remote.response
 
-data class StoryDetailResponse(
+data class DetailStoryResponse(
     val error: Boolean,
     val message: String,
     val story: StoryDetail

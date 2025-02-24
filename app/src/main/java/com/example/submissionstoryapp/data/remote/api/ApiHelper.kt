@@ -1,6 +1,7 @@
 package com.example.submissionstoryapp.data.remote.api
 
 import com.example.submissionstoryapp.data.remote.response.AddStoryResponse
+import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
@@ -21,7 +22,7 @@ interface ApiHelper {
         size: Int,
         location: Int
     ): Response<GetStoriesResponse>
-
+    suspend fun getDetailStories(id:String): Response<DetailStoryResponse>
     suspend fun subscribeNotification(): SubscribeResponse
     suspend fun unSubscribeNotification(): UnsubscribeResponse
 }

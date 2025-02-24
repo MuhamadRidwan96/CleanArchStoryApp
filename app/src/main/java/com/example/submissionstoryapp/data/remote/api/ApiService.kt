@@ -1,10 +1,10 @@
 package com.example.submissionstoryapp.data.remote.api
 
 import com.example.submissionstoryapp.data.remote.response.AddStoryResponse
+import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
-import com.example.submissionstoryapp.data.remote.response.StoryDetailResponse
 import com.example.submissionstoryapp.data.remote.response.SubscribeResponse
 import com.example.submissionstoryapp.data.remote.response.UnsubscribeResponse
 import com.example.submissionstoryapp.domain.model.LoginModel
@@ -64,10 +64,9 @@ interface ApiService {
     ): Response<GetStoriesResponse>
 
     @GET("/v1/stories/{id}")
-    suspend fun getStoryDetail(
-        @Header("Authorization") token: String, // Bearer token
+    suspend fun getStoryDetail( // Bearer token
         @Path("id") id: String // Story ID
-    ): StoryDetailResponse
+    ): Response<DetailStoryResponse>
 
     @POST("/v1/notifications/subscribe")
     suspend fun subscribeNotification(

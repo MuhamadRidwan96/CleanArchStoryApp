@@ -7,12 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
+import com.example.submissionstoryapp.domain.DetailStoriesUseCase
 import com.example.submissionstoryapp.domain.StoriesUseCase
 import com.example.submissionstoryapp.domain.authUseCase.CheckLoginUseCase
 import com.example.submissionstoryapp.domain.authUseCase.LoginUseCase
 import com.example.submissionstoryapp.domain.authUseCase.LogoutUseCase
 import com.example.submissionstoryapp.domain.authUseCase.RegisterUseCase
 import com.example.submissionstoryapp.domain.model.RegisterModel
+import com.example.submissionstoryapp.domain.model.StoryDetailUIModel
 import com.example.submissionstoryapp.presentation.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -29,7 +31,8 @@ class MainViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val storiesUseCase: StoriesUseCase,
-    private val checkLoginUseCase: CheckLoginUseCase
+    private val checkLoginUseCase: CheckLoginUseCase,
+    private val detailStoriesUseCase: DetailStoriesUseCase
 ) : ViewModel() {
     private val _loginResult = MutableStateFlow<UiState<LoginResponse>>(UiState.Loading)
     val loginResult: StateFlow<UiState<LoginResponse>> = _loginResult
@@ -39,6 +42,9 @@ class MainViewModel @Inject constructor(
 
     private val _getStories = MutableStateFlow<UiState<GetStoriesResponse>>(UiState.Loading)
     val getStories: StateFlow<UiState<GetStoriesResponse>> = _getStories
+
+    private val _getDetailStories = MutableStateFlow<UiState<StoryDetailUIModel>>(UiState.Loading)
+    val getDetailStories: StateFlow<UiState<StoryDetailUIModel>> = _getDetailStories
 
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> = _isLoggedIn
@@ -97,6 +103,20 @@ class MainViewModel @Inject constructor(
                 if (stories is UiState.Error) {
                     _error.emit(stories.message)
                 }
+            }
+        }
+    }
+
+    // Get detail stories view model
+    fun getDetailStoriesViewModel(id: String) {
+        viewModelScope.launch {
+            detailStoriesUseCase(id).collect { detail ->
+                val storyDetail = detailStoriesUseCase.processStoryDetail(detail)
+                _getDetailStories.value = storyDetail
+                if (detail is UiState.Error) {
+                    _error.emit(detail.message)
+                }
+
             }
         }
     }

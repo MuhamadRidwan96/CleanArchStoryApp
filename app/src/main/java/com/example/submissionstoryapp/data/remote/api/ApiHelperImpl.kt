@@ -2,6 +2,7 @@ package com.example.submissionstoryapp.data.remote.api
 
 import com.example.submissionstoryapp.domain.model.RegisterModel
 import com.example.submissionstoryapp.data.remote.response.AddStoryResponse
+import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
@@ -36,6 +37,10 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         location: Int
     ): Response<GetStoriesResponse> {
         return apiService.getAllStories(page, size, location)
+    }
+
+    override suspend fun getDetailStories(id: String): Response<DetailStoryResponse> {
+        return apiService.getStoryDetail(id)
     }
 
 

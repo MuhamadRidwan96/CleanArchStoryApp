@@ -18,5 +18,9 @@
     <string name="image">Image</string>
     <string name="add_story">Add story</string>
     <string name="extended_fab_content_desc">extend fab desc</string>
+    <string name="description">Description</string>
+    <string name="created_at">Created at</string>
+    <string name="latitude">Latitude</string>
+    <string name="longatitude">Longatitude</string>
 
 </resources>

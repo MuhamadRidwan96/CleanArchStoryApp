@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.submissionstoryapp.MainActivity
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.presentation.MainViewModel
+import com.example.submissionstoryapp.presentation.home.HomeActivity
 import com.example.submissionstoryapp.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ class WelcomeActivity : AppCompatActivity() {
     private fun checkLoginObserver() {
         viewModel.isLoggedIn.observe(this) { isLogin ->
             if (isLogin) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this,HomeActivity::class.java))
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }

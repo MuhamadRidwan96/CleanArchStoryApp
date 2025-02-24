@@ -5,10 +5,12 @@ import com.example.submissionstoryapp.data.remote.api.ApiHelperImpl
 import com.example.submissionstoryapp.data.remote.api.ApiService
 import com.example.submissionstoryapp.data.repository.Repository
 import com.example.submissionstoryapp.data.repository.RepositoryImpl
+import com.example.submissionstoryapp.domain.DetailStoriesUseCase
 import com.example.submissionstoryapp.domain.StoriesUseCase
 import com.example.submissionstoryapp.domain.authUseCase.LoginUseCase
 import com.example.submissionstoryapp.domain.authUseCase.RegisterUseCase
 import com.example.submissionstoryapp.presentation.base.ViewModelFactory
+import com.example.submissionstoryapp.presentation.detail.DetailStories
 import com.example.submissionstoryapp.utils.UserPref
 import dagger.Module
 import dagger.Provides
@@ -54,5 +56,11 @@ object ApplicationModule {
     @Provides
     fun provideStoriesUseCase(repository: Repository): StoriesUseCase {
         return StoriesUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDetailStoriesUseCase(repository: Repository): DetailStoriesUseCase {
+        return DetailStoriesUseCase(repository)
     }
 }
