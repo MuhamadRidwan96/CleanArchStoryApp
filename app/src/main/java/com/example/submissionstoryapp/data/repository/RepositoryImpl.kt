@@ -1,6 +1,7 @@
 package com.example.submissionstoryapp.data.repository
 
 import com.example.submissionstoryapp.data.remote.api.ApiHelper
+import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
@@ -65,9 +66,32 @@ class RepositoryImpl @Inject constructor(private val apiHelper: ApiHelper) : Rep
             val getStoriesResponse = apiHelper.getAllStories(page, size, location)
 
             if (getStoriesResponse.isSuccessful) {
-               emit(getStoriesResponse.body()?.let { UiState.Success(it) } ?: UiState.Error(Constant.ERROR_NULL))
+                emit(getStoriesResponse.body()?.let { UiState.Success(it) } ?: UiState.Error(
+                    Constant.ERROR_NULL
+                ))
             } else {
                 val errorBody = getStoriesResponse.errorBody()?.string()
+                val errorMessage = try {
+                    errorBody?.let { ErrorHandle.parseErrorMessage(it) } ?: Constant.UNKNOWN_ERROR
+                } catch (e: Exception) {
+                    Constant.FAILED_PARSE
+                }
+                emit(UiState.Error(errorMessage))
+            }
+
+        } catch (e: Exception) {
+            emit(UiState.Error("Network Error : ${e.localizedMessage}"))
+        }
+    }
+
+    override fun detailStories(id: String): Flow<UiState<DetailStoryResponse>> = flow {
+        try {
+            val detailResponse = apiHelper.getDetailStories(id)
+            if (detailResponse.isSuccessful) {
+                emit(detailResponse.body()?.let { UiState.Success(it) }
+                    ?: UiState.Error(Constant.ERROR_NULL))
+            } else {
+                val errorBody = detailResponse.errorBody()?.toString()
                 val errorMessage = try {
                     errorBody?.let { ErrorHandle.parseErrorMessage(it) } ?: Constant.UNKNOWN_ERROR
                 } catch (e: Exception) {

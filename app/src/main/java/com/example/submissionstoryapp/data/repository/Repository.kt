@@ -1,5 +1,6 @@
 package com.example.submissionstoryapp.data.repository
 
+import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
@@ -18,5 +19,5 @@ interface Repository {
         size: Int,
         location: Int
     ): Flow<UiState<GetStoriesResponse>>
-
+    fun detailStories(id:String) : Flow<UiState<DetailStoryResponse>>
 }
