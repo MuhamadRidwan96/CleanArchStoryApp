@@ -2,6 +2,7 @@ package com.example.submissionstoryapp.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -13,7 +14,6 @@ import com.example.submissionstoryapp.domain.model.RegisterModel
 import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
 import com.example.submissionstoryapp.presentation.login.LoginActivity
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,14 +25,20 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        initializeBinding()
         setUpObserver()
+        setUpListener()
+    }
 
+    private fun setUpListener() {
         binding.signupButton.setOnClickListener {
             registerAction()
         }
+    }
+
+    private fun initializeBinding() {
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun setUpObserver() {
@@ -40,11 +46,18 @@ class SignUpActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.registerResult.collect { registerState ->
                     when (registerState) {
-                        is UiState.Error -> { errorHandle(registerState.message) }
+                        is UiState.Error -> {
+                            binding.signupButton.setUpSignUp(false)
+                            errorHandle(registerState.message)
+                        }
 
-                        is UiState.Success -> { handleSuccess(registerState.data) }
+                        is UiState.Success -> {
+                            binding.signupButton.setUpSignUp(false)
+                            handleSuccess(registerState.data)
+                        }
 
-                        else -> Unit
+                        is UiState.Loading -> binding.signupButton.setUpSignUp(true)
+                        is UiState.Idle -> binding.signupButton.setUpSignUp(false)
                     }
                 }
             }
@@ -57,19 +70,18 @@ class SignUpActivity : AppCompatActivity() {
         val password = binding.passwordEditText.text.toString()
 
         if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+            binding.signupButton.setUpSignUp(true)
             viewModel.register(RegisterModel(name, email, password))
         }
     }
 
     private fun errorHandle(errorMessage: String) {
-        Snackbar.make(binding.root, "Error: $errorMessage", Snackbar.LENGTH_LONG).show()
+        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun handleSuccess(response: RegisterResponse) {
-       Snackbar.make(binding.root,response.message,Snackbar.LENGTH_SHORT).show()
-
-        val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-        startActivity(intent)
+        errorHandle(response.message)
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }

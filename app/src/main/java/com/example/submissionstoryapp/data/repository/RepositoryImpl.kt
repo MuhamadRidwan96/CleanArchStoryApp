@@ -1,6 +1,7 @@
 package com.example.submissionstoryapp.data.repository
 
 import com.example.submissionstoryapp.data.remote.api.ApiHelper
+import com.example.submissionstoryapp.data.remote.response.AddStoryResponse
 import com.example.submissionstoryapp.data.remote.response.DetailStoryResponse
 import com.example.submissionstoryapp.data.remote.response.GetStoriesResponse
 import com.example.submissionstoryapp.data.remote.response.LoginResponse
@@ -12,10 +13,13 @@ import com.example.submissionstoryapp.utils.Constant
 import com.example.submissionstoryapp.utils.ErrorHandle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val apiHelper: ApiHelper) : Repository {
     override fun login(requestLogin: LoginModel): Flow<UiState<LoginResponse>> = flow {
+        emit(UiState.Loading)
         try {
 
             val responseLogin = apiHelper.login(requestLogin)
@@ -92,6 +96,35 @@ class RepositoryImpl @Inject constructor(private val apiHelper: ApiHelper) : Rep
                     ?: UiState.Error(Constant.ERROR_NULL))
             } else {
                 val errorBody = detailResponse.errorBody()?.toString()
+                val errorMessage = try {
+                    errorBody?.let { ErrorHandle.parseErrorMessage(it) } ?: Constant.UNKNOWN_ERROR
+                } catch (e: Exception) {
+                    Constant.FAILED_PARSE
+                }
+                emit(UiState.Error(errorMessage))
+            }
+
+        } catch (e: Exception) {
+            emit(UiState.Error("Network Error : ${e.localizedMessage}"))
+        }
+    }
+
+    override fun addStories(
+        description: RequestBody,
+        photo: MultipartBody.Part,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ): Flow<UiState<AddStoryResponse>> = flow {
+        try {
+            val addStoriesResponse = apiHelper.addStories(description, photo, lat, lon)
+            if (addStoriesResponse.isSuccessful) {
+                emit(
+                    addStoriesResponse.body()?.let { UiState.Success(it) } ?: UiState.Error(
+                        Constant.ERROR_NULL
+                    )
+                )
+            } else {
+                val errorBody = addStoriesResponse.errorBody()?.toString()
                 val errorMessage = try {
                     errorBody?.let { ErrorHandle.parseErrorMessage(it) } ?: Constant.UNKNOWN_ERROR
                 } catch (e: Exception) {

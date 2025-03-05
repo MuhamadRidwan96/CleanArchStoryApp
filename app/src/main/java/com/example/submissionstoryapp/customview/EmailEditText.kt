@@ -1,7 +1,6 @@
 package com.example.submissionstoryapp.customview
 
 import android.content.Context
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet

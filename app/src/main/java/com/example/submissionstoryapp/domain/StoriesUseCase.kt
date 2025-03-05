@@ -9,7 +9,7 @@ import javax.inject.Inject
 class StoriesUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    operator fun invoke(
+   operator fun invoke(
         page: Int,
         size: Int,
         location: Int

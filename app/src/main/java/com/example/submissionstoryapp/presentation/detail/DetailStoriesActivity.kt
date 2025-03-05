@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailStories : AppCompatActivity() {
+class DetailStoriesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailStoriesBinding
 
@@ -43,6 +43,7 @@ class DetailStories : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getDetailStories.collect { detail ->
                     when (detail) {
+                        is UiState.Idle -> Unit
                         is UiState.Loading -> Unit
                         is UiState.Error -> Unit
                         is UiState.Success -> {
@@ -65,7 +66,7 @@ class DetailStories : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.error.collectLatest { isError ->
-                    Toast.makeText(this@DetailStories, isError, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailStoriesActivity, isError, Toast.LENGTH_SHORT).show()
                 }
             }
         }

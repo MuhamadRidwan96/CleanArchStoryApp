@@ -16,7 +16,7 @@ class LoginUseCase @Inject constructor(
     private val userPref: UserPref
 ) {
     operator fun invoke(email: String, password: String): Flow<UiState<LoginResponse>> = flow {
-
+        emit(UiState.Loading)
         repository.login(LoginModel(email, password)).collect { uiState ->
 
             when (uiState) {

@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.submissionstoryapp.MainActivity
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.home.HomeActivity

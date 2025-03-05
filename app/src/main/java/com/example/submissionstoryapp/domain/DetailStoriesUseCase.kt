@@ -53,6 +53,7 @@ class DetailStoriesUseCase @Inject constructor(private val repository: Repositor
             }
             is UiState.Error -> UiState.Error(story.message)
             is UiState.Loading -> UiState.Loading
+            is UiState.Idle -> UiState.Idle
         }
     }
 }

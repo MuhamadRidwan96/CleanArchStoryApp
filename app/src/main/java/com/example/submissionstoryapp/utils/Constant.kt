@@ -5,4 +5,5 @@ object Constant {
     const val ERROR_NULL = "Response body is null!"
     const val FAILED_PARSE = "Failed to parse error message"
     const val UNKNOWN_ERROR = "Unknown error!"
+    const val TEXT_PLAIN = "text/plain"
 }

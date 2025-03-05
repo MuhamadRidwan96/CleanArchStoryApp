@@ -1,7 +1,6 @@
 package com.example.submissionstoryapp.presentation.base
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.data.remote.response.Story
 import com.example.submissionstoryapp.databinding.ListStoryBinding
-import com.example.submissionstoryapp.presentation.detail.DetailStories
+import com.example.submissionstoryapp.presentation.detail.DetailStoriesActivity
 
 class MainAdapter : ListAdapter<Story, MainAdapter.MainViewHolder>(DIFF_CALLBACK) {
 
@@ -39,13 +38,11 @@ class MainAdapter : ListAdapter<Story, MainAdapter.MainViewHolder>(DIFF_CALLBACK
 
             itemView.setOnClickListener {
                 val context = itemView.context
-                val intent = Intent(context, DetailStories::class.java)
+                val intent = Intent(context, DetailStoriesActivity::class.java)
                 intent.putExtra("id", story.id)
                 context.startActivity(intent)
-
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -55,7 +52,6 @@ class MainAdapter : ListAdapter<Story, MainAdapter.MainViewHolder>(DIFF_CALLBACK
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val item = getItem(position)
-        Log.d("MainAdapter", "Binding item: ${item.name}")
         holder.bind(item)
     }
 

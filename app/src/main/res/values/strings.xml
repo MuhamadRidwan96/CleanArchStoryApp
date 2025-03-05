@@ -22,5 +22,11 @@
     <string name="created_at">Created at</string>
     <string name="latitude">Latitude</string>
     <string name="longatitude">Longatitude</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="camera_x">Camera X</string>
+    <string name="camera">Camera</string>
+    <string name="preview_image_description">Preview Image Description</string>
+    <string name="desc">Write…</string>
 
 </resources>
