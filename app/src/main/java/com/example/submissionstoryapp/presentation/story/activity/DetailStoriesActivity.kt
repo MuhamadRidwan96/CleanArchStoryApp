@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.detail
+package com.example.submissionstoryapp.presentation.story.activity
 
 import android.os.Bundle
 import android.widget.Toast
@@ -10,8 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.databinding.ActivityDetailStoriesBinding
-import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
+import com.example.submissionstoryapp.presentation.story.StoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ class DetailStoriesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailStoriesBinding
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: StoriesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

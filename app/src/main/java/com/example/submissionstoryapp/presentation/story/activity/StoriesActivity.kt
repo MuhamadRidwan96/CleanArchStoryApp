@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.home
+package com.example.submissionstoryapp.presentation.story.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,21 +14,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.databinding.ActivityHomeBinding
-import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.MainAdapter
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.auth.LoginActivity
-import com.example.submissionstoryapp.presentation.story.AddStoryActivity
+import com.example.submissionstoryapp.presentation.auth.activity.LoginActivity
+import com.example.submissionstoryapp.presentation.story.StoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity @Inject constructor() : AppCompatActivity() {
+class StoriesActivity @Inject constructor() : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: StoriesViewModel by viewModels()
 
     private val storiesAdapter: MainAdapter = MainAdapter()
 
@@ -112,7 +111,7 @@ class HomeActivity @Inject constructor() : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         binding.rvFinish.apply {
-            layoutManager = LinearLayoutManager(this@HomeActivity)
+            layoutManager = LinearLayoutManager(this@StoriesActivity)
             adapter = storiesAdapter
             addItemDecoration(
                 DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation)
@@ -122,7 +121,7 @@ class HomeActivity @Inject constructor() : AppCompatActivity() {
 
     private fun handleLogout() {
         viewModel.logout()
-        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+        val intent = Intent(this@StoriesActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }

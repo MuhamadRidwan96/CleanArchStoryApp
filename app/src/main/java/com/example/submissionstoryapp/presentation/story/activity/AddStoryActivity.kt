@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.story
+package com.example.submissionstoryapp.presentation.story.activity
 
 import android.Manifest
 import android.content.Context
@@ -21,9 +21,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.submissionstoryapp.databinding.ActivityAddStoryBinding
-import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.home.HomeActivity
+import com.example.submissionstoryapp.presentation.story.StoriesViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +34,7 @@ import java.io.File
 class AddStoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddStoryBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: StoriesViewModel by viewModels()
     private var currentPhotoPath: String? = null
     private var selectedImageUri: Uri? = null
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
@@ -93,7 +92,7 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun navigateBack() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, StoriesActivity::class.java))
         finish()
     }
 

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.data.remote.response.Story
 import com.example.submissionstoryapp.databinding.ListStoryBinding
-import com.example.submissionstoryapp.presentation.detail.DetailStoriesActivity
+import com.example.submissionstoryapp.presentation.story.activity.DetailStoriesActivity
 
 class MainAdapter : ListAdapter<Story, MainAdapter.MainViewHolder>(DIFF_CALLBACK) {
 

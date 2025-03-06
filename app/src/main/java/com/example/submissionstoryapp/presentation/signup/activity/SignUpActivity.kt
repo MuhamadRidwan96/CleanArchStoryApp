@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.signup
+package com.example.submissionstoryapp.presentation.signup.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
 import com.example.submissionstoryapp.databinding.ActivitySignUpBinding
 import com.example.submissionstoryapp.domain.model.RegisterModel
-import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.auth.LoginActivity
+import com.example.submissionstoryapp.presentation.auth.activity.LoginActivity
+import com.example.submissionstoryapp.presentation.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

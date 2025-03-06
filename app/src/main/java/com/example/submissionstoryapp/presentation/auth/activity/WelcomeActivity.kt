@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.welcome
+package com.example.submissionstoryapp.presentation.auth.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,16 +7,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.submissionstoryapp.R
-import com.example.submissionstoryapp.presentation.home.HomeActivity
-import com.example.submissionstoryapp.presentation.auth.LoginActivity
-import com.example.submissionstoryapp.presentation.auth.LoginViewModel
+import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
+import com.example.submissionstoryapp.presentation.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WelcomeActivity : AppCompatActivity() {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,7 @@ class WelcomeActivity : AppCompatActivity() {
     private fun checkLoginObserver() {
         viewModel.isLoggedIn.observe(this) { isLogin ->
             if (isLogin) {
-                startActivity(Intent(this,HomeActivity::class.java))
+                startActivity(Intent(this, StoriesActivity::class.java))
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }

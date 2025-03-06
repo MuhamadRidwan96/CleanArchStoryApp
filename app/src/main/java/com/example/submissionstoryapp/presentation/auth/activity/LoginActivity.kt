@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.auth
+package com.example.submissionstoryapp.presentation.auth.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.submissionstoryapp.databinding.ActivityLoginBinding
+import com.example.submissionstoryapp.presentation.auth.AuthViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.home.HomeActivity
-import com.example.submissionstoryapp.presentation.signup.SignUpActivity
+import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
+import com.example.submissionstoryapp.presentation.signup.activity.SignUpActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHomeScreen() {
-        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        val intent = Intent(this@LoginActivity, StoriesActivity::class.java)
         startActivity(intent)
         finish()
     }
