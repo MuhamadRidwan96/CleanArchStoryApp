@@ -93,4 +93,7 @@ dependencies {
     //glide
     implementation (libs.glide)
 
+    //pagination
+    implementation(libs.androidx.paging.runtime)
+
 }

@@ -1,4 +1,4 @@
-package com.example.submissionstoryapp.presentation.login
+package com.example.submissionstoryapp.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.submissionstoryapp.databinding.ActivityLoginBinding
-import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
 import com.example.submissionstoryapp.presentation.home.HomeActivity
 import com.example.submissionstoryapp.presentation.signup.SignUpActivity
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

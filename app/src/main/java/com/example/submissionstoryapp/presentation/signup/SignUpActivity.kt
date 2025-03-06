@@ -13,7 +13,7 @@ import com.example.submissionstoryapp.databinding.ActivitySignUpBinding
 import com.example.submissionstoryapp.domain.model.RegisterModel
 import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.login.LoginActivity
+import com.example.submissionstoryapp.presentation.auth.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

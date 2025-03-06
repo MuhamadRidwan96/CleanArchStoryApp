@@ -31,7 +31,7 @@
             android:name=".presentation.home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".presentation.auth.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

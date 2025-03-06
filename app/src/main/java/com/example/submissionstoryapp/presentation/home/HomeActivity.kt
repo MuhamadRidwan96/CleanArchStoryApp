@@ -17,7 +17,7 @@ import com.example.submissionstoryapp.databinding.ActivityHomeBinding
 import com.example.submissionstoryapp.presentation.MainViewModel
 import com.example.submissionstoryapp.presentation.base.MainAdapter
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.login.LoginActivity
+import com.example.submissionstoryapp.presentation.auth.LoginActivity
 import com.example.submissionstoryapp.presentation.story.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

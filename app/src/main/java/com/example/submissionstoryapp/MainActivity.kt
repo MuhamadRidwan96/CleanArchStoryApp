@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.submissionstoryapp.databinding.ActivityMainBinding
 import com.example.submissionstoryapp.presentation.MainViewModel
-import com.example.submissionstoryapp.presentation.login.LoginActivity
+import com.example.submissionstoryapp.presentation.auth.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
