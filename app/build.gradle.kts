@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.spotless)
 }
 
 android {
@@ -44,8 +45,19 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
 }
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktlint("0.43.0")
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
+
+
+
 
 dependencies {
 
@@ -65,7 +77,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp (libs.hilt.android.compiler)
 
-    // Coroutines (clean architecture)
+    // Asyncronous
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
@@ -94,6 +106,7 @@ dependencies {
     implementation (libs.glide)
 
     //pagination
-    implementation(libs.androidx.paging.runtime)
+    implementation( libs.androidx.paging.common.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
 
 }
