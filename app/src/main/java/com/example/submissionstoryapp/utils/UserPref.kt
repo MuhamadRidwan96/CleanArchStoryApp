@@ -26,7 +26,6 @@ class UserPref @Inject constructor(
             preferences[EMAIL_KEY] = user.email
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
-
         }
     }
 
@@ -43,8 +42,8 @@ class UserPref @Inject constructor(
             }
     }
 
-    suspend fun logout(){
-        dataStore.edit{ preferences->
+    suspend fun logout() {
+        dataStore.edit { preferences ->
             preferences.clear()
         }
     }

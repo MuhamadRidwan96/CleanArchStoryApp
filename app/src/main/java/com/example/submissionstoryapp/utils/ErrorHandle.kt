@@ -5,11 +5,11 @@ import org.json.JSONObject
 
 object ErrorHandle {
     @SuppressLint("SuspiciousIndentation")
-    fun parseErrorMessage(errorBody:String):String?{
+    fun parseErrorMessage(errorBody: String): String? {
         return try {
             val jsonObject = JSONObject(errorBody)
-                jsonObject.getString("message")
-        } catch (e:Exception){
+            jsonObject.getString("message")
+        } catch (e: Exception) {
             null
         }
     }
