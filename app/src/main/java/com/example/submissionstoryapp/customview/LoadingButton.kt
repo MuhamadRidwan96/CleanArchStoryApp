@@ -16,7 +16,7 @@ class LoadingButton @JvmOverloads constructor(
     private var binding: ViewLoadingButtonBinding =
         ViewLoadingButtonBinding.inflate(LayoutInflater.from(context), this)
 
-    private var isLoading:Boolean = false
+    private var isLoading: Boolean = false
 
     fun setLoading(loading: Boolean) {
         isLoading = loading
@@ -25,14 +25,14 @@ class LoadingButton @JvmOverloads constructor(
         binding.actionButton.isEnabled = !loading
     }
 
-    fun setUpload(loading: Boolean){
+    fun setUpload(loading: Boolean) {
         isLoading = loading
-        binding.loadingAnimation.visibility = if(loading) View.VISIBLE else View.GONE
+        binding.loadingAnimation.visibility = if (loading) View.VISIBLE else View.GONE
         binding.actionButton.text = if (loading) "" else "Unggah"
         binding.actionButton.isEnabled = !loading
     }
 
-    fun setUpSignUp(loading: Boolean){
+    fun setUpSignUp(loading: Boolean) {
         isLoading = loading
         binding.loadingAnimation.visibility = if (loading) View.VISIBLE else View.GONE
         binding.actionButton.text = if (loading) "" else "Daftar"

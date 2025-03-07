@@ -16,12 +16,12 @@ class EmailEditText @JvmOverloads constructor(
 
     private val emailRegex = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                "\\@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+"
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+            "\\." +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+"
     )
 
     init {
@@ -41,11 +41,11 @@ class EmailEditText @JvmOverloads constructor(
                     }
                 }
             }
-            override fun afterTextChanged(s: Editable?) {}})
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun isValidEmail(email: String): Boolean {
         return emailRegex.matcher(email).matches()
-
     }
 }
