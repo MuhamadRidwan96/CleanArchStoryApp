@@ -11,8 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.submissionstoryapp.data.remote.response.RegisterResponse
 import com.example.submissionstoryapp.databinding.ActivitySignUpBinding
 import com.example.submissionstoryapp.domain.model.RegisterModel
-import com.example.submissionstoryapp.presentation.base.UiState
 import com.example.submissionstoryapp.presentation.auth.activity.LoginActivity
+import com.example.submissionstoryapp.presentation.base.UiState
 import com.example.submissionstoryapp.presentation.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,12 +20,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignUpBinding
+    private val binding by lazy {  ActivitySignUpBinding.inflate(layoutInflater) }
     private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeBinding()
+        setContentView(binding.root)
+
         setUpObserver()
         setUpListener()
     }
@@ -34,11 +35,6 @@ class SignUpActivity : AppCompatActivity() {
         binding.signupButton.setOnClickListener {
             registerAction()
         }
-    }
-
-    private fun initializeBinding() {
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     private fun setUpObserver() {

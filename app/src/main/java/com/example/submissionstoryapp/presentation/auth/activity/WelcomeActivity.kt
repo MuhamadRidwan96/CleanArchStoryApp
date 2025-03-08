@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.submissionstoryapp.R
-import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
 import com.example.submissionstoryapp.presentation.auth.AuthViewModel
+import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -28,5 +28,17 @@
     <string name="camera">Camera</string>
     <string name="preview_image_description">Preview Image Description</string>
     <string name="desc">Write…</string>
+    <string name="data_kosong">Data kosong!</string>
+    <string name="invalid_event_id">Invalid Event ID</string>
+    <string name="email_and_password_cannot_be_empty">Email and password cannot be empty</string>
+    <string name="login_success">Login Success!</string>
+    <string name="deskripsi_dan_gambar_tidak_boleh_kosong">Deskripsi dan gambar tidak boleh kosong</string>
+    <string name="berhasil_unggah_cerita">Berhasil unggah cerita!</string>
+    <string name="aktifkan_gps">Harap aktifkan GPS untuk mendapatkan lokasi</string>
+    <string name="gagal_mendapatkan_lokasi">Gagal mendapatkan lokasi</string>
+    <string name="izin_lokasi_ditolak">Izin lokasi ditolak</string>
+    <string name="gagal_membuat_file_gambar">Gagal membuat file gambar</string>
+    <string name="izin_diberikan">Izin diberikan</string>
+    <string name="izin_ditolak">Izin Ditolak</string>
 
 </resources>

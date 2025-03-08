@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.databinding.ActivityLoginBinding
 import com.example.submissionstoryapp.presentation.auth.AuthViewModel
 import com.example.submissionstoryapp.presentation.base.UiState
-import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
 import com.example.submissionstoryapp.presentation.signup.activity.SignUpActivity
-import com.google.android.material.snackbar.Snackbar
+import com.example.submissionstoryapp.presentation.story.activity.StoriesActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,12 +21,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeBinding()
+        setContentView(binding.root)
+
         setUpListener()
         setUpObserver()
     }
@@ -46,18 +47,9 @@ class LoginActivity : AppCompatActivity() {
                     viewModel.login(email, password)
                 }
             } else {
-                Snackbar.make(
-                    binding.root,
-                    "Email and password cannot be empty",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+              showToast(getString(R.string.email_and_password_cannot_be_empty))
             }
         }
-    }
-
-    private fun initializeBinding() {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     private fun setUpObserver() {
@@ -68,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                         is UiState.Success -> {
                             binding.loginButton.setLoading(false)
                             navigateToHomeScreen()
-                            showToast("Login Success!")
+                            showToast(getString(R.string.login_success))
                         }
 
                         is UiState.Error -> {
@@ -104,7 +96,4 @@ class LoginActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 }
-
-

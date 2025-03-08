@@ -20,6 +20,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.submissionstoryapp.R
 import com.example.submissionstoryapp.databinding.ActivityAddStoryBinding
 import com.example.submissionstoryapp.presentation.base.UiState
 import com.example.submissionstoryapp.presentation.story.StoriesViewModel
@@ -33,7 +34,7 @@ import java.io.File
 @AndroidEntryPoint
 class AddStoryActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddStoryBinding
+    private val binding by lazy { ActivityAddStoryBinding.inflate(layoutInflater) }
     private val viewModel: StoriesViewModel by viewModels()
     private var currentPhotoPath: String? = null
     private var selectedImageUri: Uri? = null
@@ -41,7 +42,6 @@ class AddStoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupListeners()
@@ -75,7 +75,6 @@ class AddStoryActivity : AppCompatActivity() {
                         is UiState.Success -> {
                             binding.uploadButton.setUpload(false)
                             navigateBack()
-
                         }
 
                         is UiState.Error -> {
@@ -109,7 +108,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            showToast(if (isGranted) "Izin diberikan" else "Izin Ditolak")
+            showToast(if (isGranted) getString(R.string.izin_diberikan) else getString(R.string.izin_ditolak))
         }
 
     private val cameraLauncher =
@@ -128,7 +127,7 @@ class AddStoryActivity : AppCompatActivity() {
                 putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 cameraLauncher.launch(this)
             }
-        } ?: showToast("Gagal membuat file gambar")
+        } ?: showToast(getString(R.string.gagal_membuat_file_gambar))
     }
 
     private fun checkGalleryPermission() {
@@ -175,12 +174,12 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadStory(lat: Float?, lon: Float?) {
         val description = binding.descriptionEditText.text.toString().trim()
         if (description.isEmpty() || selectedImageUri == null) {
-            showToast("Deskripsi dan gambar tidak boleh kosong")
+            showToast(getString(R.string.deskripsi_dan_gambar_tidak_boleh_kosong))
             return
         }
         uriToFile(selectedImageUri!!).let {
             viewModel.addStoriesViewModel(description, it, lat, lon)
-            showToast("Berhasil unggah cerita!")
+            showToast(getString(R.string.berhasil_unggah_cerita))
         }
     }
 
@@ -188,7 +187,7 @@ class AddStoryActivity : AppCompatActivity() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (!isLocationEnabled()) {
-            showToast("Harap aktifkan GPS untuk mendapatkan lokasi")
+            showToast(getString(R.string.aktifkan_gps))
             return
         }
         if (ActivityCompat.checkSelfPermission(
@@ -196,9 +195,9 @@ class AddStoryActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
 
             // Jika belum, minta izin
@@ -212,14 +211,13 @@ class AddStoryActivity : AppCompatActivity() {
             )
             return
         }
-        //Jika ijin diberikan, ambil lokasi
+        // Jika ijin diberikan, ambil lokasi
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
             .addOnSuccessListener { location ->
                 location?.let { uploadStory(it.latitude.toFloat(), it.longitude.toFloat()) }
-                    ?: showToast("Gagal mendapatkan lokasi")
+                    ?: showToast(getString(R.string.gagal_mendapatkan_lokasi))
             }
             .addOnFailureListener { showToast("Gagal mendapatkan lokasi: ${it.message}") }
-
     }
 
     // Tangani hasil permintaan izin
@@ -233,7 +231,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation() // Jika izin diberikan, panggil kembali fungsi
             } else {
-                showToast("Izin lokasi ditolak")
+                showToast(getString(R.string.izin_lokasi_ditolak))
             }
         }
     }
@@ -241,11 +239,10 @@ class AddStoryActivity : AppCompatActivity() {
     private fun isLocationEnabled(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 }

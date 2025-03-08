@@ -44,14 +44,13 @@ class StoriesViewModel @Inject constructor(
     private val _error = MutableSharedFlow<String>()
     val error: SharedFlow<String> get() = _error
 
-
     fun logout() {
         viewModelScope.launch {
             logoutUseCase()
         }
     }
 
-    //Get stories view model
+    // Get stories view model
     fun getStories(
         page: Int,
         size: Int,
@@ -102,5 +101,4 @@ class StoriesViewModel @Inject constructor(
             }
         }
     }
-
 }

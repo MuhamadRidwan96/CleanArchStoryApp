@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase
-):ViewModel(){
+) : ViewModel() {
 
     private val _registerResult = MutableStateFlow<UiState<RegisterResponse>>(UiState.Idle)
     val registerResult: StateFlow<UiState<RegisterResponse>> = _registerResult

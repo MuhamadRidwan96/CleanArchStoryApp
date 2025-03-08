@@ -54,5 +54,4 @@ class MainAdapter : ListAdapter<Story, MainAdapter.MainViewHolder>(DIFF_CALLBACK
         val item = getItem(position)
         holder.bind(item)
     }
-
 }
